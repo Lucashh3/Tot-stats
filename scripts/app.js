@@ -1,9 +1,9 @@
 import { addDragAndDropHandlers } from './dragAndDrop.js';
 
-const mainCont = document.querySelector(".mainContainer");
-const leagueSelector = document.querySelector("#leagueSelector");
-
 let liveMatchesList = [];
+
+// Moved DOM element selectors inside main function
+// to ensure DOM is loaded before querying
 
 function _equal(a, b) {
     return a === b;
@@ -300,7 +300,7 @@ function createPeriodSelector(matchID) {
     return periodSelectorDiv;
 }
 
-function createMatchCard(match) {
+function createMatchCard(match, mainCont) {
     const matchCard = document.createElement('div');
     matchCard.classList.add("matchContainer");
     matchCard.setAttribute('draggable', 'true');
@@ -392,14 +392,14 @@ function hasPressureGraph(match) {
     return true; // Mostrar gráfico para todas as partidas
 }
 
-async function checkLiveMatches() {
+async function checkLiveMatches(mainCont) {
     liveMatchesList.forEach(match => {
         if (hasPressureGraph(match)) {
             if (!leagueSelector.innerHTML.includes(match.tournament.name)) {
                 leagueSelector.innerHTML += `<option value="${match.tournament.name}">${match.tournament.name}</option>`;
             }
 
-            createMatchCard(match);
+            createMatchCard(match, mainCont);
         }
     });
 }
@@ -423,8 +423,15 @@ function showNewVersionModal() {
 
 async function main() {
     try {
+        const mainCont = document.querySelector(".mainContainer");
+        const leagueSelector = document.querySelector("#leagueSelector");
+        
+        if (!mainCont || !leagueSelector) {
+            throw new Error("Elementos do DOM não encontrados. Verifique se o HTML foi carregado corretamente.");
+        }
+
         await updateLiveMatchesList();
-        checkLiveMatches();
+        checkLiveMatches(mainCont);
         updateScores();
         updateStatsForAll();
 
