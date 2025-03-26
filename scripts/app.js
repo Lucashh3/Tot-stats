@@ -423,7 +423,7 @@ function showNewVersionModal() {
 
 async function main() {
     try {
-        const mainCont = document.querySelector(".mainContainer");
+        const mainCont = document.getElementById("mainContainer");
         const leagueSelector = document.querySelector("#leagueSelector");
         
         if (!mainCont || !leagueSelector) {
