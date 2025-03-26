@@ -389,7 +389,7 @@ function createMatchCard(match) {
 }
 
 function hasPressureGraph(match) {
-    return match.hasEventPlayerHeatMap || match.hasEventPlayerStatistics;
+    return true; // Mostrar gráfico para todas as partidas
 }
 
 async function checkLiveMatches() {
