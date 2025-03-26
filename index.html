@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Placares ao vivo e estatísticas de partidas de futebol.">
+    <meta name="author" content="Gabriel A. Velasco">
+    <link rel="icon" href="imgs/unxuxyqi.ico" type="image/x-icon">
+    <title>Totó Stats</title>
+    
+    <!-- Fontes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Novo CSS -->
+    <link rel="stylesheet" href="styles/modern.css">
+    
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Totó Stats <span class="beta-badge">BETA</span></h1>
+        <ul class="info-list">
+            <li>SofaScore não fornece gráficos para todas as partidas.</li>
+            <li><strong>Placares/Estatísticas</strong> são <strong>atualizados automaticamente.</strong></li>
+            <li>Use zoom para melhor visualização (<strong>CTRL</strong> + <strong>Scroll</strong>).</li>
+            <li><strong>Arraste/Selecione</strong> um cartão de partida clicando e segurando no <strong>fundo</strong> dele.</li>
+        </ul>           
+    </header>
+
+    <div class="league-selector-container">
+        <div class="league-selector">
+            <label for="leagueSelector">Selecione a Liga:</label>
+            <select id="leagueSelector">
+                <option value="All">Todas as Ligas</option>
+            </select>
+        </div>
+    </div>
+
+    <main class="main-container">
+        <div class="matches-grid" id="mainContainer"></div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p><strong>Totó Stats</strong> é um projeto que usa a <strong>API do SofaScore</strong> para fornecer placares ao vivo e estatísticas de partidas de futebol.</p>
+        </div>
+    </footer>
+      
+    <!-- Scripts -->
+    <script src="scripts/app.js" type="module"></script>
+    <script src="scripts/dragAndDrop.js" type="module"></script>
+</body>
+</html>
