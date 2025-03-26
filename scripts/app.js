@@ -91,7 +91,17 @@ async function getMatchStats(matchID, period = 0) {
     // get stats for a given matchID and according to a selected period (ALL, 1ST, 2ND)
 
     try {
-        const response = await axios.get(`https://www.sofascore.com/api/v1/event/${matchID}/statistics`);
+        const response = await axios.get(`https://www.sofascore.com/api/v1/event/${matchID}/statistics`, {
+            timeout: 5000,
+            validateStatus: function (status) {
+                return status >= 200 && status < 300 || status === 404;
+            }
+        });
+
+        if (response.status === 404) {
+            console.warn(`Estatísticas não disponíveis para a partida ${matchID}`);
+            return null;
+        }
 
         // exemple of JSON response:
 
@@ -197,7 +207,8 @@ async function getMatchStats(matchID, period = 0) {
         }
 
     } catch (error) {
-        throw error;
+        console.error(`Erro ao buscar estatísticas para partida ${matchID}:`, error.message);
+        return null;
     }
 }
 
@@ -333,18 +344,18 @@ function createMatchCard(match, mainCont) {
     statsDiv.setAttribute('id', match.id);
 
     const statConfigs = [
-        { key: 'ballPossession', name: 'Ball Possession', icon: '⚽' },
-        { key: 'expectedGoals', name: 'xP Goals', icon: '🥅' },
-        { key: 'bigChanceCreated', name: 'Big Chances', icon: '🎯' },
-        { key: 'totalShotsOnGoal', name: 'Total Shots', icon: '👟' },
-        { key: 'totalShotsInsideBox', name: 'Shots Inside Box', icon: '📍' },
-        { key: 'totalShotsOutsideBox', name: 'Shots Outside Box', icon: '🎯' },
-        { key: 'cornerKicks', name: 'Corners', icon: '🚩' },
-        { key: 'passes', name: 'Passes', icon: '🔄' },
-        { key: 'totalClearance', name: 'Clearances', icon: '🛡️' },
-        { key: 'yellowCards', name: 'Yellow Cards', icon: '🟨' },
-        { key: 'redCards', name: 'Red Cards', icon: '🟥' },
-        { key: 'touchesInOppBox', name: 'Touches in Pen. Area', icon: '🏃' }
+    { key: 'ballPossession', name: 'Posse de Bola', icon: '🔄', unit: '%' },
+    { key: 'expectedGoals', name: 'Gols Esperados', icon: '📊', unit: '' },
+    { key: 'bigChanceCreated', name: 'Chances Claras', icon: '🎯', unit: '' },
+    { key: 'totalShotsOnGoal', name: 'Finalizações', icon: '⚽', unit: '' },
+    { key: 'totalShotsInsideBox', name: 'Finalizações na Área', icon: '📍', unit: '' },
+    { key: 'totalShotsOutsideBox', name: 'Finalizações Fora', icon: '🎯', unit: '' },
+    { key: 'cornerKicks', name: 'Escanteios', icon: '🚩', unit: '' },
+    { key: 'passes', name: 'Passes', icon: '🔄', unit: '' },
+    { key: 'totalClearance', name: 'Desarmes', icon: '🛡️', unit: '' },
+    { key: 'yellowCards', name: 'Cartões Amarelos', icon: '🟨', unit: '' },
+    { key: 'redCards', name: 'Cartões Vermelhos', icon: '🟥', unit: '' },
+    { key: 'touchesInOppBox', name: 'Toques na Área', icon: '🏃', unit: '' }
         // quiser adc mais stats, so adicionar mais objetos aqui...
     ];
 
@@ -356,24 +367,40 @@ function createMatchCard(match, mainCont) {
 
     statConfigs.forEach(stat => {
         const homeStatDiv = document.createElement('div');
+        homeStatDiv.classList.add('stat-item');
+        
         const homeStatIcon = document.createElement('span');
+        homeStatIcon.className = 'stat-icon';
         homeStatIcon.textContent = stat.icon;
+        
         const homeStatName = document.createElement('p');
+        homeStatName.className = 'stat-name';
         homeStatName.textContent = stat.name;
+        
         const homeStatValue = document.createElement('span');
+        homeStatValue.className = 'stat-value';
         homeStatValue.id = stat.key;
         homeStatValue.textContent = '-';
+        
         homeStatDiv.append(homeStatIcon, homeStatName, homeStatValue);
         divHomeTeamStats.appendChild(homeStatDiv);
 
         const awayStatDiv = document.createElement('div');
+        awayStatDiv.classList.add('stat-item');
+        
         const awayStatIcon = document.createElement('span');
+        awayStatIcon.className = 'stat-icon';
         awayStatIcon.textContent = stat.icon;
+        
         const awayStatName = document.createElement('p');
+        awayStatName.className = 'stat-name';
         awayStatName.textContent = stat.name;
+        
         const awayStatValue = document.createElement('span');
+        awayStatValue.className = 'stat-value';
         awayStatValue.id = stat.key;
         awayStatValue.textContent = '-';
+        
         awayStatDiv.append(awayStatValue, awayStatName, awayStatIcon);
         divAwayTeamStats.appendChild(awayStatDiv);
     });

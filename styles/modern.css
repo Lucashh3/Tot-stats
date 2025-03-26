@@ -260,6 +260,48 @@ iframe {
     gap: 0.5rem;
 }
 
+/* Novos estilos para estatísticas */
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s;
+}
+
+.stat-item:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.stat-icon {
+    font-size: 1.25rem;
+    width: 1.5rem;
+    text-align: center;
+}
+
+.stat-name {
+    flex: 1;
+    font-size: 0.875rem;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.stat-value {
+    font-weight: 700;
+    color: var(--text);
+    min-width: 3rem;
+    text-align: right;
+}
+
+.homeTeamsStatsDiv .stat-value {
+    color: var(--primary);
+}
+
+.awayTeamsStatsDiv .stat-value {
+    color: var(--error);
+}
+
 .awayTeamsStatsDiv div {
     justify-content: flex-end;
 }
