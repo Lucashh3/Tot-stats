@@ -179,6 +179,91 @@ header h1 {
   padding: 1rem;
 }
 
+/* Estilos para os cards de partida dinâmicos */
+.matchContainer {
+    background-color: var(--card-bg);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+}
+
+.matchCardHeader {
+    padding: 0.75rem;
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.matchCardHeader h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 0.5rem;
+}
+
+iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    background: white;
+}
+
+.periodSelector {
+    padding: 0.5rem;
+    background-color: var(--secondary);
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.periodBtn {
+    padding: 0.25rem 0.5rem;
+    background-color: white;
+    border: 1px solid var(--border);
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.periodBtn.selected {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary-dark);
+}
+
+.statsDiv {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.homeTeamsStatsDiv, .awayTeamsStatsDiv {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.homeTeamsStatsDiv div, .awayTeamsStatsDiv div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.awayTeamsStatsDiv div {
+    justify-content: flex-end;
+}
+
 /* Footer */
 footer {
   background-color: var(--secondary);
